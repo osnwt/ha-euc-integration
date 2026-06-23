@@ -4,4 +4,5 @@ set -euo pipefail
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 
-compose restart homeassistant
+compose stop -t 90 homeassistant
+compose up -d homeassistant

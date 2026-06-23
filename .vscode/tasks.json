@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Home Assistant: Start",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/start.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Home Assistant: Stop",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/stop.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Home Assistant: Restart",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/restart.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Home Assistant: Status",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/status.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Home Assistant: Logs",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/logs.sh ${input:logTail}",
+      "problemMatcher": [],
+      "isBackground": true
+    }
+  ],
+  "inputs": [
+    {
+      "id": "logTail",
+      "type": "pickString",
+      "description": "How many log lines to show before following",
+      "default": "100",
+      "options": [
+        "50",
+        "100",
+        "200"
+      ]
+    }
+  ]
+}

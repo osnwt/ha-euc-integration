@@ -42,6 +42,8 @@ Or use helper scripts:
 ./scripts/stop.sh
 ```
 
+`restart.sh` and `stop.sh` use an extended shutdown timeout so Home Assistant has time to close SQLite cleanly before the container is stopped.
+
 ## Data and backups
 
 All Home Assistant state is stored in `./data`.

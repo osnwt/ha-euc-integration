@@ -5,6 +5,7 @@ services:
     image: ghcr.io/home-assistant/home-assistant:stable
     container_name: homeassistant-dev
     restart: unless-stopped
+    stop_grace_period: 90s
     ports:
       - "8123:8123"
     environment:

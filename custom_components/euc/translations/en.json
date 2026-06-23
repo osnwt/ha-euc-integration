@@ -1,0 +1,68 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add wheel",
+        "description": "Select a discovered Sherman-L compatible wheel or enter its BLE address manually.",
+        "data": {
+          "manual_address": "BLE address",
+          "address": "Discovered wheel"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Add wheel",
+        "description": "Do you want to add {name} ({address})?"
+      }
+    },
+    "abort": {
+      "not_supported": "This Bluetooth device is not supported.",
+      "already_configured": "This wheel is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "voltage": {
+        "name": "Voltage"
+      },
+      "speed": {
+        "name": "Speed"
+      },
+      "trip_distance": {
+        "name": "Trip distance"
+      },
+      "total_distance": {
+        "name": "Total distance"
+      },
+      "phase_current": {
+        "name": "Phase current"
+      },
+      "temperature": {
+        "name": "Temperature"
+      },
+      "pitch_angle": {
+        "name": "Pitch angle"
+      },
+      "pwm": {
+        "name": "PWM"
+      },
+      "auto_off_seconds": {
+        "name": "Auto-off"
+      },
+      "charge_mode": {
+        "name": "Charge mode"
+      },
+      "speed_alert": {
+        "name": "Speed alert"
+      },
+      "speed_tiltback": {
+        "name": "Tiltback speed"
+      },
+      "firmware_version": {
+        "name": "Firmware version"
+      },
+      "pedals_mode": {
+        "name": "Pedals mode"
+      }
+    }
+  }
+}

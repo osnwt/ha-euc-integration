@@ -1,0 +1,68 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Добавление колеса",
+        "description": "Выберите найденное совместимое Sherman-L колесо или введите его BLE-адрес вручную.",
+        "data": {
+          "manual_address": "BLE-адрес",
+          "address": "Найденное колесо"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Добавление колеса",
+        "description": "Добавить {name} ({address})?"
+      }
+    },
+    "abort": {
+      "not_supported": "Это Bluetooth-устройство не поддерживается.",
+      "already_configured": "Это колесо уже настроено."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "voltage": {
+        "name": "Напряжение"
+      },
+      "speed": {
+        "name": "Скорость"
+      },
+      "trip_distance": {
+        "name": "Пробег поездки"
+      },
+      "total_distance": {
+        "name": "Общий пробег"
+      },
+      "phase_current": {
+        "name": "Фазный ток"
+      },
+      "temperature": {
+        "name": "Температура"
+      },
+      "pitch_angle": {
+        "name": "Угол тангажа"
+      },
+      "pwm": {
+        "name": "PWM"
+      },
+      "auto_off_seconds": {
+        "name": "Автоотключение"
+      },
+      "charge_mode": {
+        "name": "Режим зарядки"
+      },
+      "speed_alert": {
+        "name": "Предупреждение скорости"
+      },
+      "speed_tiltback": {
+        "name": "Скорость тилтбэка"
+      },
+      "firmware_version": {
+        "name": "Версия прошивки"
+      },
+      "pedals_mode": {
+        "name": "Режим педалей"
+      }
+    }
+  }
+}

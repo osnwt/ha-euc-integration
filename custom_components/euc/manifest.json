@@ -1,0 +1,29 @@
+{
+  "domain": "euc",
+  "name": "EUC",
+  "bluetooth": [
+    {
+      "service_uuid": "0000ffe0-0000-1000-8000-00805f9b34fb"
+    },
+    {
+      "local_name": "Sherman*"
+    },
+    {
+      "local_name": "LeaperKim*"
+    }
+  ],
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [
+    "bluetooth"
+  ],
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "loggers": [
+    "custom_components.euc"
+  ],
+  "requirements": [
+    "bleak-retry-connector>=4.4.3"
+  ],
+  "version": "0.1.0"
+}

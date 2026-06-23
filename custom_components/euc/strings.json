@@ -1,0 +1,22 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add wheel",
+        "description": "Select a discovered Sherman-L compatible wheel or enter its BLE address manually.",
+        "data": {
+          "manual_address": "BLE address",
+          "address": "Discovered wheel"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Add wheel",
+        "description": "Do you want to add {name} ({address})?"
+      }
+    },
+    "abort": {
+      "not_supported": "This Bluetooth device is not supported.",
+      "already_configured": "This wheel is already configured."
+    }
+  }
+}

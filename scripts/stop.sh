@@ -4,4 +4,4 @@ set -euo pipefail
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 
-compose stop
+compose stop -t 90
