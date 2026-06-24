@@ -21,10 +21,21 @@ from .const import (
     PROTOCOL_VETERAN,
 )
 
+_VETERAN_DISCOVERY_NAMES = (
+    "leaper",
+    "veteran",
+    "lk",
+)
+
+_BEGODE_DISCOVERY_NAMES = (
+    "begode",
+    "gotway",
+)
+
 
 def _is_supported_discovery(info: BluetoothServiceInfoBleak) -> bool:
     name = (info.name or "").lower()
-    if "sherman" in name or "leaper" in name or "lynx" in name or "begode" in name or "gotway" in name:
+    if any(token in name for token in _VETERAN_DISCOVERY_NAMES + _BEGODE_DISCOVERY_NAMES):
         return True
 
     service_uuids = {uuid.lower() for uuid in info.service_uuids}

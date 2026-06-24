@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from collections.abc import Callable
+from copy import deepcopy
 
 from bleak.backends.characteristic import BleakGATTCharacteristic
 from bleak.backends.device import BLEDevice
@@ -133,7 +134,7 @@ class EUCBleClient:
                 return
             self._set_available(True)
             for sample in samples:
-                self._on_sample(sample)
+                self._on_sample(self._enrich_sample(sample))
 
         await client.start_notify(notify_char, _notification_handler)
         _LOGGER.info("EUC BLE notify started: address=%s char=%s", self.address, notify_char.uuid)
@@ -179,3 +180,14 @@ class EUCBleClient:
             return
         self._available = available
         self._on_availability_changed(available)
+
+    def _enrich_sample(self, sample: TelemetrySample) -> TelemetrySample:
+        enriched = deepcopy(sample)
+        service_info = bluetooth.async_last_service_info(
+            self.hass,
+            self.address,
+            connectable=True,
+        )
+        if service_info is not None and service_info.rssi is not None:
+            enriched["rssi"] = service_info.rssi
+        return enriched

@@ -113,6 +113,7 @@ BEGODE_ONLY_SENSOR_KEYS: Final = frozenset(
 REMOVED_SENSOR_KEYS: Final = frozenset(
     {
         "battery_current",
+        "lqi",
         "motor_temperature",
     }
 )

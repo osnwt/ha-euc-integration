@@ -80,6 +80,9 @@
       "pedals_mode": {
         "name": "Режим педалей"
       },
+      "rssi": {
+        "name": "RSSI"
+      },
       "battery_current": {
         "name": "Ток батареи"
       },

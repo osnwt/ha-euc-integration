@@ -63,6 +63,18 @@ def test_veteran_parser_maps_lynx_s_model() -> None:
     assert samples[0]["firmware_version"] == "009.2.10"
 
 
+def test_veteran_parser_maps_other_models() -> None:
+    parser = VeteranParser()
+
+    patton = parser.feed_data(_build_veteran_packet(version=4210))[0]
+    abrams = parser.feed_data(_build_veteran_packet(version=2210))[0]
+    oryx = parser.feed_data(_build_veteran_packet(version=8210))[0]
+
+    assert patton["model"] == "Patton"
+    assert abrams["model"] == "Abrams"
+    assert oryx["model"] == "Oryx"
+
+
 def test_begode_parser_extracts_live_and_total_data() -> None:
     parser = BegodeParser(battery_profile="67v")
 
@@ -82,7 +94,7 @@ def test_begode_parser_extracts_live_and_total_data() -> None:
     assert sample["battery_level"] == 89
     assert sample["total_distance"] == 24.786
     assert sample["speed_tiltback"] == 0
-    assert sample["pedals_mode"] == 0
+    assert sample["pedals_mode"] == "Hard"
 
 
 def test_multi_protocol_parser_auto_detects_family() -> None:

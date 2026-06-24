@@ -80,6 +80,9 @@
       "pedals_mode": {
         "name": "Pedals mode"
       },
+      "rssi": {
+        "name": "RSSI"
+      },
       "battery_current": {
         "name": "Battery current"
       },

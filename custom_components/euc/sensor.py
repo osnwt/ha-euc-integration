@@ -13,6 +13,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     EntityCategory,
     PERCENTAGE,
+    SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
     UnitOfLength,
@@ -169,6 +170,15 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     EUCSensorDescription(
+        key="rssi",
+        translation_key="rssi",
+        value_key="rssi",
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
+    ),
+    EUCSensorDescription(
         key="bms1_voltage",
         translation_key="bms1_voltage",
         value_key="bms1_voltage",
@@ -176,7 +186,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -187,7 +196,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=2,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -198,7 +206,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -209,7 +216,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -220,7 +226,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -231,7 +236,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -239,7 +243,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         translation_key="bms1_cell_count",
         value_key="bms1_cell_count",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -250,7 +253,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -261,7 +263,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=2,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -272,7 +273,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -283,7 +283,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -294,7 +293,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -305,7 +303,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -313,7 +310,6 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         translation_key="bms2_cell_count",
         value_key="bms2_cell_count",
         entity_category=EntityCategory.DIAGNOSTIC,
-        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
 )
