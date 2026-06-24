@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Добавление колеса",
-        "description": "Выберите найденное совместимое Sherman-L колесо или введите его BLE-адрес вручную.",
+        "description": "Выберите найденное совместимое колесо или введите его BLE-адрес вручную.",
         "data": {
           "manual_address": "BLE-адрес",
           "address": "Найденное колесо"
@@ -19,8 +19,25 @@
       "already_configured": "Это колесо уже настроено."
     }
   },
+  "options": {
+    "abort": {
+      "no_configurable_options": "Для этого колеса сейчас нет настраиваемых параметров."
+    },
+    "step": {
+      "init": {
+        "title": "Параметры колеса",
+        "description": "Профиль батареи используется для масштабирования напряжения Begode/Gotway. Для Veteran настройка игнорируется.",
+        "data": {
+          "battery_profile": "Профиль батареи"
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
+      "battery_level": {
+        "name": "Батарея"
+      },
       "voltage": {
         "name": "Напряжение"
       },
@@ -62,6 +79,54 @@
       },
       "pedals_mode": {
         "name": "Режим педалей"
+      },
+      "battery_current": {
+        "name": "Ток батареи"
+      },
+      "motor_temperature": {
+        "name": "Температура мотора"
+      },
+      "bms1_voltage": {
+        "name": "Напряжение BMS 1"
+      },
+      "bms1_current": {
+        "name": "Ток BMS 1"
+      },
+      "bms1_cell_min": {
+        "name": "Минимальная ячейка BMS 1"
+      },
+      "bms1_cell_max": {
+        "name": "Максимальная ячейка BMS 1"
+      },
+      "bms1_cell_diff": {
+        "name": "Разброс ячеек BMS 1"
+      },
+      "bms1_cell_avg": {
+        "name": "Средняя ячейка BMS 1"
+      },
+      "bms1_cell_count": {
+        "name": "Число ячеек BMS 1"
+      },
+      "bms2_voltage": {
+        "name": "Напряжение BMS 2"
+      },
+      "bms2_current": {
+        "name": "Ток BMS 2"
+      },
+      "bms2_cell_min": {
+        "name": "Минимальная ячейка BMS 2"
+      },
+      "bms2_cell_max": {
+        "name": "Максимальная ячейка BMS 2"
+      },
+      "bms2_cell_diff": {
+        "name": "Разброс ячеек BMS 2"
+      },
+      "bms2_cell_avg": {
+        "name": "Средняя ячейка BMS 2"
+      },
+      "bms2_cell_count": {
+        "name": "Число ячеек BMS 2"
       }
     }
   }

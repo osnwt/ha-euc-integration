@@ -5,17 +5,26 @@ from typing import Any
 import voluptuous as vol
 from homeassistant.components import bluetooth
 from homeassistant.components.bluetooth import BluetoothServiceInfoBleak
-from homeassistant.config_entries import ConfigFlow
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.const import CONF_ADDRESS
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import config_validation as cv
 
-from .const import BLE_SERVICE_UUID, DOMAIN, NAME
+from .const import (
+    BATTERY_PROFILES,
+    BLE_SERVICE_UUID,
+    CONF_BATTERY_PROFILE,
+    DEFAULT_BATTERY_PROFILE,
+    DOMAIN,
+    NAME,
+    PROTOCOL_BEGODE,
+    PROTOCOL_VETERAN,
+)
 
 
 def _is_supported_discovery(info: BluetoothServiceInfoBleak) -> bool:
     name = (info.name or "").lower()
-    if "sherman" in name or "leaper" in name:
+    if "sherman" in name or "leaper" in name or "lynx" in name or "begode" in name or "gotway" in name:
         return True
 
     service_uuids = {uuid.lower() for uuid in info.service_uuids}
@@ -102,6 +111,10 @@ class EUCConfigFlow(ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(schema_fields),
         )
 
+    @staticmethod
+    def async_get_options_flow(config_entry: ConfigEntry) -> "EUCOptionsFlow":
+        return EUCOptionsFlow(config_entry)
+
     async def _async_discovered_devices(self) -> dict[str, BluetoothServiceInfoBleak]:
         configured = {entry.unique_id for entry in self._async_current_entries()}
         discovered: dict[str, BluetoothServiceInfoBleak] = {}
@@ -112,3 +125,37 @@ class EUCConfigFlow(ConfigFlow, domain=DOMAIN):
                 continue
             discovered[info.address] = info
         return discovered
+
+
+class EUCOptionsFlow(OptionsFlow):
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        self._config_entry = config_entry
+
+    async def async_step_init(
+        self,
+        user_input: dict[str, Any] | None = None,
+    ) -> FlowResult:
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        protocol = self._get_detected_protocol()
+        if protocol == PROTOCOL_VETERAN:
+            return self.async_abort(reason="no_configurable_options")
+
+        current = self._config_entry.options.get(CONF_BATTERY_PROFILE, DEFAULT_BATTERY_PROFILE)
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_BATTERY_PROFILE, default=current): vol.In(
+                        {key: profile["label"] for key, profile in BATTERY_PROFILES.items()}
+                    ),
+                }
+            ),
+        )
+
+    def _get_detected_protocol(self) -> str | None:
+        coordinator = self.hass.data.get(DOMAIN, {}).get(self._config_entry.entry_id)
+        if coordinator is None or coordinator.data is None:
+            return None
+        return coordinator.data.get("protocol")

@@ -11,14 +11,20 @@ from bleak_retry_connector import BleakClientWithServiceCache, establish_connect
 from homeassistant.components import bluetooth
 from homeassistant.core import HomeAssistant
 
-from .const import BLE_NOTIFY_SHORT_UUIDS, BLE_NOTIFY_UUID, DEFAULT_BACKOFF_INITIAL, DEFAULT_BACKOFF_MAX
-from .parser import ShermanLParser, TelemetrySample
+from .const import (
+    BLE_NOTIFY_SHORT_UUIDS,
+    BLE_NOTIFY_UUID,
+    DEFAULT_BACKOFF_INITIAL,
+    DEFAULT_BACKOFF_MAX,
+    DEFAULT_BATTERY_PROFILE,
+)
+from .parser import MultiProtocolParser, TelemetrySample
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class EUCBleClient:
-    """Persistent BLE reader for a Sherman-L wheel."""
+    """Persistent BLE reader for one EUC wheel."""
 
     def __init__(
         self,
@@ -26,12 +32,13 @@ class EUCBleClient:
         address: str,
         on_sample: Callable[[TelemetrySample], None],
         on_availability_changed: Callable[[bool], None],
+        battery_profile: str = DEFAULT_BATTERY_PROFILE,
     ) -> None:
         self.hass = hass
         self.address = address
         self._on_sample = on_sample
         self._on_availability_changed = on_availability_changed
-        self._parser = ShermanLParser()
+        self._parser = MultiProtocolParser(battery_profile=battery_profile)
         self._task: asyncio.Task[None] | None = None
         self._client: BleakClientWithServiceCache | None = None
         self._stopped = False

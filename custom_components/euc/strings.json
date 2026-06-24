@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Add wheel",
-        "description": "Select a discovered Sherman-L compatible wheel or enter its BLE address manually.",
+        "description": "Select a discovered compatible wheel or enter its BLE address manually.",
         "data": {
           "manual_address": "BLE address",
           "address": "Discovered wheel"
@@ -17,6 +17,20 @@
     "abort": {
       "not_supported": "This Bluetooth device is not supported.",
       "already_configured": "This wheel is already configured."
+    }
+  },
+  "options": {
+    "abort": {
+      "no_configurable_options": "This wheel currently has no configurable options."
+    },
+    "step": {
+      "init": {
+        "title": "Wheel options",
+        "description": "Battery profile is used for Begode/Gotway voltage scaling. Veteran ignores this setting.",
+        "data": {
+          "battery_profile": "Battery profile"
+        }
+      }
     }
   }
 }
