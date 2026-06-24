@@ -110,6 +110,9 @@
       "bms1_cell_count": {
         "name": "BMS 1 cell count"
       },
+      "bms1_cells": {
+        "name": "SmartBMS 1"
+      },
       "bms2_voltage": {
         "name": "BMS 2 voltage"
       },
@@ -130,6 +133,9 @@
       },
       "bms2_cell_count": {
         "name": "BMS 2 cell count"
+      },
+      "bms2_cells": {
+        "name": "SmartBMS 2"
       }
     }
   }

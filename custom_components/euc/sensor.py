@@ -33,6 +33,7 @@ from .coordinator import EUCCoordinator
 class EUCSensorDescription(SensorEntityDescription):
     value_key: str
     protocols: tuple[str, ...] | None = None
+    extra_attributes_prefix: str | None = None
 
 
 VETERAN_ONLY: Final = (PROTOCOL_VETERAN,)
@@ -186,6 +187,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -196,6 +198,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=2,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -206,6 +209,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -216,6 +220,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -226,6 +231,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -236,6 +242,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -243,7 +250,17 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         translation_key="bms1_cell_count",
         value_key="bms1_cell_count",
         entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
+    ),
+    EUCSensorDescription(
+        key="bms1_cells",
+        translation_key="bms1_cells",
+        value_key="bms1_cell_diff_mv",
+        native_unit_of_measurement="mV",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        protocols=VETERAN_ONLY,
+        extra_attributes_prefix="bms1",
     ),
     EUCSensorDescription(
         key="bms2_voltage",
@@ -253,6 +270,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -263,6 +281,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=2,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -273,6 +292,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -283,6 +303,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -293,6 +314,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -303,6 +325,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         entity_category=EntityCategory.DIAGNOSTIC,
         suggested_display_precision=3,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -310,7 +333,17 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         translation_key="bms2_cell_count",
         value_key="bms2_cell_count",
         entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
         protocols=VETERAN_ONLY,
+    ),
+    EUCSensorDescription(
+        key="bms2_cells",
+        translation_key="bms2_cells",
+        value_key="bms2_cell_diff_mv",
+        native_unit_of_measurement="mV",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        protocols=VETERAN_ONLY,
+        extra_attributes_prefix="bms2",
     ),
 )
 
@@ -354,3 +387,24 @@ class EUCSensor(CoordinatorEntity[EUCCoordinator], SensorEntity):
         if self.entity_description.protocols is None:
             return True
         return self.coordinator.data.get("protocol") in self.entity_description.protocols
+
+    @property
+    def extra_state_attributes(self):
+        if self.coordinator.data is None or self.entity_description.extra_attributes_prefix is None:
+            return None
+
+        prefix = self.entity_description.extra_attributes_prefix
+        cell_voltages = self.coordinator.data.get(f"{prefix}_cell_voltages")
+        if not cell_voltages:
+            return None
+
+        return {
+            "cell_count": self.coordinator.data.get(f"{prefix}_cell_count"),
+            "cell_voltages": cell_voltages,
+            "cell_min_v": self.coordinator.data.get(f"{prefix}_cell_min_v"),
+            "cell_max_v": self.coordinator.data.get(f"{prefix}_cell_max_v"),
+            "cell_avg_v": self.coordinator.data.get(f"{prefix}_cell_avg_v"),
+            "cell_diff_mv": self.coordinator.data.get(f"{prefix}_cell_diff_mv"),
+            "cell_min_index": self.coordinator.data.get(f"{prefix}_cell_min_index"),
+            "cell_max_index": self.coordinator.data.get(f"{prefix}_cell_max_index"),
+        }

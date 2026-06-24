@@ -96,6 +96,7 @@ VETERAN_ONLY_SENSOR_KEYS: Final = frozenset(
         "bms1_cell_diff",
         "bms1_cell_avg",
         "bms1_cell_count",
+        "bms1_cells",
         "bms2_voltage",
         "bms2_current",
         "bms2_cell_min",
@@ -103,6 +104,7 @@ VETERAN_ONLY_SENSOR_KEYS: Final = frozenset(
         "bms2_cell_diff",
         "bms2_cell_avg",
         "bms2_cell_count",
+        "bms2_cells",
     }
 )
 

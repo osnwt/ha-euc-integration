@@ -139,12 +139,21 @@ class _VeteranBmsState:
         voltage = sum(active_cells)
         min_cell = min(active_cells)
         max_cell = max(active_cells)
+        min_index = active_cells.index(min_cell) + 1
+        max_index = active_cells.index(max_cell) + 1
         sample[f"{prefix}_voltage"] = _round(voltage, 3)
         sample[f"{prefix}_cell_min"] = _round(min_cell, 3)
         sample[f"{prefix}_cell_max"] = _round(max_cell, 3)
         sample[f"{prefix}_cell_diff"] = _round(max_cell - min_cell, 3)
         sample[f"{prefix}_cell_avg"] = _round(voltage / len(active_cells), 3)
         sample[f"{prefix}_cell_count"] = len(active_cells)
+        sample[f"{prefix}_cell_voltages"] = [_round(cell, 3) for cell in active_cells]
+        sample[f"{prefix}_cell_min_v"] = _round(min_cell, 3)
+        sample[f"{prefix}_cell_max_v"] = _round(max_cell, 3)
+        sample[f"{prefix}_cell_avg_v"] = _round(voltage / len(active_cells), 3)
+        sample[f"{prefix}_cell_diff_mv"] = int(round((max_cell - min_cell) * 1000))
+        sample[f"{prefix}_cell_min_index"] = min_index
+        sample[f"{prefix}_cell_max_index"] = max_index
         return sample
 
 

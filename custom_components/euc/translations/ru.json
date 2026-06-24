@@ -110,6 +110,9 @@
       "bms1_cell_count": {
         "name": "Число ячеек BMS 1"
       },
+      "bms1_cells": {
+        "name": "SmartBMS 1"
+      },
       "bms2_voltage": {
         "name": "Напряжение BMS 2"
       },
@@ -130,6 +133,9 @@
       },
       "bms2_cell_count": {
         "name": "Число ячеек BMS 2"
+      },
+      "bms2_cells": {
+        "name": "SmartBMS 2"
       }
     }
   }

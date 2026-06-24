@@ -75,6 +75,22 @@ def test_veteran_parser_maps_other_models() -> None:
     assert oryx["model"] == "Oryx"
 
 
+def test_veteran_bms_summary_exposes_cell_voltage_attributes() -> None:
+    parser = VeteranParser()
+    parser._bms1.cell_count = 3
+    parser._bms1.cells[0:3] = [4.002, 3.991, 4.009]
+
+    sample = parser._bms1.summary("bms1")
+
+    assert sample["bms1_cell_voltages"] == [4.002, 3.991, 4.009]
+    assert sample["bms1_cell_min_v"] == 3.991
+    assert sample["bms1_cell_max_v"] == 4.009
+    assert sample["bms1_cell_avg_v"] == 4.001
+    assert sample["bms1_cell_diff_mv"] == 18
+    assert sample["bms1_cell_min_index"] == 2
+    assert sample["bms1_cell_max_index"] == 3
+
+
 def test_begode_parser_extracts_live_and_total_data() -> None:
     parser = BegodeParser(battery_profile="67v")
 
