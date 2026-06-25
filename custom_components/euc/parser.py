@@ -228,7 +228,7 @@ class VeteranParser:
             "speed": _round(_i16_be(packet, 6), 1),
             "trip_distance": _round(_rev_u32_be(packet, 8) / 1000.0, 3),
             "total_distance": _round(_rev_u32_be(packet, 12) / 1000.0, 3),
-            "phase_current": _round(_i16_be(packet, 16), 1),
+            "phase_current": _round(_i16_be(packet, 16) / 10.0, 1),
             "temperature": _round(_i16_be(packet, 18) / 100.0, 2),
             "auto_off_seconds": _u16_be(packet, 20),
             "charge_mode": _u16_be(packet, 22),
