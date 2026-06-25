@@ -39,6 +39,8 @@ decluttering_templates:
               - entity: "[[entity]]_total_distance"
                 name: Total distance
               - type: divider
+              - entity: "[[entity]]_connection_state"
+                name: Connection state
               - entity: "binary_[[entity]]_charge_mode"
                 name: Charge mode
               - type: divider

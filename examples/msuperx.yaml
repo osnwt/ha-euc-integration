@@ -41,11 +41,15 @@ decluttering_templates:
               - type: divider
               - entity: "[[entity]]_speed"
                 name: Speed
+              - type: divider
+              - entity: "[[entity]]_connection_state"
+                name: Connection state
+              - type: divider
               - entity: "[[entity]]_pedals_mode"
                 name: Pedals mode
 
 views:
-  - title: MSuperX
+  - title: MSuper X
     type: sections
     max_columns: 3
     cards: []
@@ -55,5 +59,5 @@ views:
           - type: custom:decluttering-card
             template: begode_card
             variables:
-              - entity: sensor.msuperx
-              - title: MSuperX
+              - entity: sensor.msuper_x
+              - title: MSuper X

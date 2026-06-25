@@ -39,7 +39,9 @@ decluttering_templates:
               - entity: "[[entity]]_total_distance"
                 name: Total distance
               - type: divider
-              - entity: "binary_[[entity]]_charge_mode"
+              - entity: "[[entity]]_connection_state"
+                name: Connection state
+              - entity: binary_[[entity]]_charge_mode
                 name: Charge mode
               - type: divider
               - entity: "[[entity]]_pitch_angle"
@@ -186,6 +188,10 @@ decluttering_templates:
               - type: divider
               - entity: "[[entity]]_speed"
                 name: Speed
+              - type: divider
+              - entity: "[[entity]]_connection_state"
+                name: Connection state
+              - type: divider
               - entity: "[[entity]]_pedals_mode"
                 name: Pedals mode
 
@@ -216,8 +222,7 @@ views:
             variables:
               - title: BMS 2
               - entity: sensor.sherman_l_bms_2
-
-  - title: MSuperX
+  - title: MSuper X
     type: sections
     max_columns: 3
     cards: []
@@ -227,5 +232,5 @@ views:
           - type: custom:decluttering-card
             template: begode_card
             variables:
-              - entity: sensor.msuperx
-              - title: MSuperX
+              - entity: sensor.msuper_x
+              - title: MSuper X
