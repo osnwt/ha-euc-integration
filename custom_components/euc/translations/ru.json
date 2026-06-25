@@ -65,9 +65,6 @@
       "auto_off_seconds": {
         "name": "Автоотключение"
       },
-      "charge_mode": {
-        "name": "Режим зарядки"
-      },
       "speed_alert": {
         "name": "Предупреждение скорости"
       },
@@ -111,7 +108,7 @@
         "name": "Число ячеек BMS 1"
       },
       "bms1_cells": {
-        "name": "SmartBMS 1"
+        "name": "BMS 1"
       },
       "bms2_voltage": {
         "name": "Напряжение BMS 2"
@@ -135,7 +132,12 @@
         "name": "Число ячеек BMS 2"
       },
       "bms2_cells": {
-        "name": "SmartBMS 2"
+        "name": "BMS 2"
+      }
+    },
+    "binary_sensor": {
+      "charge_mode": {
+        "name": "Режим зарядки"
       }
     }
   }
