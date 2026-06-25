@@ -44,6 +44,9 @@ class EUCBleClient:
         self._client: BleakClientWithServiceCache | None = None
         self._stopped = False
         self._available = False
+        self._connection_enabled = True
+        self._connection_enabled_event = asyncio.Event()
+        self._connection_enabled_event.set()
 
     async def start(self) -> None:
         if self._task is not None:
@@ -71,6 +74,11 @@ class EUCBleClient:
         _LOGGER.info("EUC BLE loop started: address=%s", self.address)
 
         while not self._stopped:
+            if not self._connection_enabled:
+                backoff = DEFAULT_BACKOFF_INITIAL
+                await self._connection_enabled_event.wait()
+                continue
+
             ble_device = bluetooth.async_ble_device_from_address(
                 self.hass,
                 self.address,
@@ -191,3 +199,18 @@ class EUCBleClient:
         if service_info is not None and service_info.rssi is not None:
             enriched["rssi"] = service_info.rssi
         return enriched
+
+    async def set_connection_enabled(self, enabled: bool) -> None:
+        if self._connection_enabled == enabled:
+            return
+        self._connection_enabled = enabled
+        if enabled:
+            self._connection_enabled_event.set()
+            return
+
+        self._connection_enabled_event.clear()
+        await self._disconnect()
+        self._set_available(False)
+
+    def set_battery_profile(self, battery_profile: str) -> None:
+        self._parser.set_battery_profile(battery_profile)

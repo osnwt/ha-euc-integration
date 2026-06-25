@@ -4,7 +4,7 @@ import logging
 from time import perf_counter
 
 _LOGGER = logging.getLogger(__name__)
-PLATFORMS = ["sensor", "binary_sensor"]
+PLATFORMS = ["sensor", "binary_sensor", "switch", "number"]
 
 
 async def async_setup(hass, config: dict) -> bool:
@@ -21,7 +21,7 @@ async def async_setup_entry(hass, entry) -> bool:
     coordinator = EUCCoordinator(hass, entry)
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = coordinator
-    entry.async_on_unload(entry.add_update_listener(_async_reload_entry))
+    entry.async_on_unload(entry.add_update_listener(_async_handle_entry_update))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     _LOGGER.info(
         "EUC setup_entry platforms ready: entry_id=%s elapsed=%.3fs",
@@ -48,5 +48,8 @@ async def async_unload_entry(hass, entry) -> bool:
     return unload_ok
 
 
-async def _async_reload_entry(hass, entry) -> None:
-    await hass.config_entries.async_reload(entry.entry_id)
+async def _async_handle_entry_update(hass, entry) -> None:
+    from .const import DOMAIN
+
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+    await coordinator.async_apply_entry_options(entry)

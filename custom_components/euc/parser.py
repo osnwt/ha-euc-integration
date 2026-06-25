@@ -408,6 +408,9 @@ class BegodeParser:
     def snapshot(self) -> TelemetrySample | None:
         return deepcopy(self._latest)
 
+    def set_battery_profile(self, battery_profile: str) -> None:
+        self._profile = BatteryProfile.from_key(battery_profile)
+
 
 class MultiProtocolParser:
     def __init__(self, battery_profile: str = DEFAULT_BATTERY_PROFILE) -> None:
@@ -440,6 +443,11 @@ class MultiProtocolParser:
 
     def snapshot(self) -> TelemetrySample | None:
         return deepcopy(self._latest)
+
+    def set_battery_profile(self, battery_profile: str) -> None:
+        begode_parser = self._parsers.get(PROTOCOL_BEGODE)
+        if begode_parser is not None:
+            begode_parser.set_battery_profile(battery_profile)
 
 
 ShermanLParser = VeteranParser

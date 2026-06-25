@@ -32,5 +32,123 @@
         }
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "battery_level": {
+        "name": "Battery"
+      },
+      "voltage": {
+        "name": "Voltage"
+      },
+      "speed": {
+        "name": "Speed"
+      },
+      "trip_distance": {
+        "name": "Trip distance"
+      },
+      "total_distance": {
+        "name": "Total distance"
+      },
+      "phase_current": {
+        "name": "Phase current"
+      },
+      "temperature": {
+        "name": "Temperature"
+      },
+      "pitch_angle": {
+        "name": "Pitch angle"
+      },
+      "pwm": {
+        "name": "PWM"
+      },
+      "auto_off_seconds": {
+        "name": "Auto-off"
+      },
+      "speed_alert": {
+        "name": "Speed alert"
+      },
+      "speed_tiltback": {
+        "name": "Tiltback speed"
+      },
+      "firmware_version": {
+        "name": "Firmware version"
+      },
+      "pedals_mode": {
+        "name": "Pedals mode"
+      },
+      "rssi": {
+        "name": "RSSI"
+      },
+      "connection_state": {
+        "name": "Connection state"
+      },
+      "bms1_voltage": {
+        "name": "BMS 1 voltage"
+      },
+      "bms1_current": {
+        "name": "BMS 1 current"
+      },
+      "bms1_cell_min": {
+        "name": "BMS 1 min cell"
+      },
+      "bms1_cell_max": {
+        "name": "BMS 1 max cell"
+      },
+      "bms1_cell_diff": {
+        "name": "BMS 1 cell diff"
+      },
+      "bms1_cell_avg": {
+        "name": "BMS 1 avg cell"
+      },
+      "bms1_cell_count": {
+        "name": "BMS 1 cell count"
+      },
+      "bms1_cells": {
+        "name": "BMS 1"
+      },
+      "bms2_voltage": {
+        "name": "BMS 2 voltage"
+      },
+      "bms2_current": {
+        "name": "BMS 2 current"
+      },
+      "bms2_cell_min": {
+        "name": "BMS 2 min cell"
+      },
+      "bms2_cell_max": {
+        "name": "BMS 2 max cell"
+      },
+      "bms2_cell_diff": {
+        "name": "BMS 2 cell diff"
+      },
+      "bms2_cell_avg": {
+        "name": "BMS 2 avg cell"
+      },
+      "bms2_cell_count": {
+        "name": "BMS 2 cell count"
+      },
+      "bms2_cells": {
+        "name": "BMS 2"
+      }
+    },
+    "binary_sensor": {
+      "charge_mode": {
+        "name": "Charge mode"
+      }
+    },
+    "switch": {
+      "periodic_updates": {
+        "name": "Periodic updates"
+      }
+    },
+    "number": {
+      "connected_seconds": {
+        "name": "Connected seconds"
+      },
+      "disconnected_seconds": {
+        "name": "Disconnected seconds"
+      }
+    }
   }
 }

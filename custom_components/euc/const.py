@@ -7,7 +7,17 @@ DOMAIN: Final = "euc"
 NAME: Final = "EUC"
 
 CONF_BATTERY_PROFILE: Final = "battery_profile"
+CONF_PERIODIC_UPDATES: Final = "periodic_updates"
+CONF_CONNECTED_SECONDS: Final = "connected_seconds"
+CONF_DISCONNECTED_SECONDS: Final = "disconnected_seconds"
 DEFAULT_BATTERY_PROFILE: Final = "auto"
+DEFAULT_PERIODIC_UPDATES: Final = False
+DEFAULT_CONNECTED_SECONDS: Final = 15
+DEFAULT_DISCONNECTED_SECONDS: Final = 60
+MIN_CONNECTED_SECONDS: Final = 5
+MAX_CONNECTED_SECONDS: Final = 3600
+MIN_DISCONNECTED_SECONDS: Final = 5
+MAX_DISCONNECTED_SECONDS: Final = 3600
 
 VENDOR_LEAPERKIM: Final = "LeaperKim"
 VENDOR_BEGODE: Final = "Begode"
@@ -28,6 +38,10 @@ STALE_AFTER: Final = timedelta(seconds=20)
 
 EVENT_EUC_CONNECTED: Final = "euc_connected"
 EVENT_EUC_DISCONNECTED: Final = "euc_disconnected"
+
+CONNECTION_STATE_CONNECTED: Final = "connected"
+CONNECTION_STATE_DISCONNECTED: Final = "disconnected"
+CONNECTION_STATE_COOLDOWN: Final = "cooldown"
 
 BATTERY_PROFILES: Final = {
     "auto": {

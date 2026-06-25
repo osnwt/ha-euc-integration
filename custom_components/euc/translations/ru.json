@@ -80,6 +80,9 @@
       "rssi": {
         "name": "RSSI"
       },
+      "connection_state": {
+        "name": "Состояние подключения"
+      },
       "battery_current": {
         "name": "Ток батареи"
       },
@@ -138,6 +141,19 @@
     "binary_sensor": {
       "charge_mode": {
         "name": "Режим зарядки"
+      }
+    },
+    "switch": {
+      "periodic_updates": {
+        "name": "Периодические обновления"
+      }
+    },
+    "number": {
+      "connected_seconds": {
+        "name": "Секунд подключения"
+      },
+      "disconnected_seconds": {
+        "name": "Секунд отключения"
       }
     }
   }

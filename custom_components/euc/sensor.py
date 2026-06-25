@@ -343,6 +343,13 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         protocols=VETERAN_ONLY,
         extra_attributes_prefix="bms2",
     ),
+    EUCSensorDescription(
+        key="connection_state",
+        translation_key="connection_state",
+        value_key="connection_state",
+        icon="mdi:bluetooth",
+        entity_category=EntityCategory.DIAGNOSTIC,
+    ),
 )
 
 
@@ -374,17 +381,17 @@ class EUCSensor(CoordinatorEntity[EUCCoordinator], SensorEntity):
 
     @property
     def native_value(self):
+        if self.entity_description.key == "connection_state":
+            return self.coordinator.connection_state
         if self.coordinator.data is None:
             return None
         return self.coordinator.data.get(self.entity_description.value_key)
 
     @property
     def available(self) -> bool:
-        if not self.coordinator.is_available or self.coordinator.data is None:
-            return False
-        if self.entity_description.protocols is None:
+        if self.entity_description.key == "connection_state":
             return True
-        return self.coordinator.data.get("protocol") in self.entity_description.protocols
+        return self.coordinator.telemetry_available(self.entity_description.protocols)
 
     @property
     def extra_state_attributes(self):

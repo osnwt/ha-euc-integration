@@ -80,6 +80,9 @@
       "rssi": {
         "name": "RSSI"
       },
+      "connection_state": {
+        "name": "Connection state"
+      },
       "battery_current": {
         "name": "Battery current"
       },
@@ -138,6 +141,19 @@
     "binary_sensor": {
       "charge_mode": {
         "name": "Charge mode"
+      }
+    },
+    "switch": {
+      "periodic_updates": {
+        "name": "Periodic updates"
+      }
+    },
+    "number": {
+      "connected_seconds": {
+        "name": "Connected seconds"
+      },
+      "disconnected_seconds": {
+        "name": "Disconnected seconds"
       }
     }
   }

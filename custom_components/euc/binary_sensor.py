@@ -73,8 +73,4 @@ class EUCBinarySensor(CoordinatorEntity[EUCCoordinator], BinarySensorEntity):
 
     @property
     def available(self) -> bool:
-        if not self.coordinator.is_available or self.coordinator.data is None:
-            return False
-        if self.entity_description.protocols is None:
-            return True
-        return self.coordinator.data.get("protocol") in self.entity_description.protocols
+        return self.coordinator.telemetry_available(self.entity_description.protocols)
