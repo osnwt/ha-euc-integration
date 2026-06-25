@@ -1,0 +1,59 @@
+decluttering_templates:
+  data_unavailable:
+    card:
+      type: markdown
+      content: |
+        Unavailable
+
+  begode_card:
+    card:
+      type: vertical-stack
+      title: "[[title]]"
+      cards:
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]_voltage"
+              state: unavailable
+          card:
+            type: custom:decluttering-card
+            template: data_unavailable
+            variables:
+              - title: "[[title]]"
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]_voltage"
+              state_not: unavailable
+          card:
+            type: entities
+            entities:
+              - entity: "[[entity]]_battery"
+                name: Battery
+              - entity: "[[entity]]_voltage"
+                name: Voltage
+              - entity: "[[entity]]_phase_current"
+                name: Phase current
+              - entity: "[[entity]]_temperature"
+                name: Temperature
+              - entity: "[[entity]]_trip_distance"
+                name: Trip distance
+              - entity: "[[entity]]_total_distance"
+                name: Total distance
+              - type: divider
+              - entity: "[[entity]]_speed"
+                name: Speed
+              - entity: "[[entity]]_pedals_mode"
+                name: Pedals mode
+
+views:
+  - title: MSuperX
+    type: sections
+    max_columns: 3
+    cards: []
+    sections:
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: begode_card
+            variables:
+              - entity: sensor.msuperx
+              - title: MSuperX

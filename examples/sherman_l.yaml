@@ -1,0 +1,179 @@
+decluttering_templates:
+  data_unavailable:
+    card:
+      type: markdown
+      content: |
+        Unavailable
+
+  leaperkim_card:
+    card:
+      type: vertical-stack
+      title: "[[title]]"
+      cards:
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]_voltage"
+              state: unavailable
+          card:
+            type: custom:decluttering-card
+            template: data_unavailable
+            variables:
+              - title: "[[title]]"
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]_voltage"
+              state_not: unavailable
+          card:
+            type: entities
+            entities:
+              - entity: "[[entity]]_battery"
+                name: Battery
+              - entity: "[[entity]]_voltage"
+                name: Voltage
+              - entity: "[[entity]]_phase_current"
+                name: Phase current
+              - entity: "[[entity]]_temperature"
+                name: Temperature
+              - entity: "[[entity]]_trip_distance"
+                name: Trip distance
+              - entity: "[[entity]]_total_distance"
+                name: Total distance
+              - type: divider
+              - entity: "binary_[[entity]]_charge_mode"
+                name: Charge mode
+              - type: divider
+              - entity: "[[entity]]_pitch_angle"
+                name: Pitch angle
+              - entity: "[[entity]]_speed"
+                name: Speed
+              - entity: "[[entity]]_pwm"
+                name: PWM
+              - type: divider
+              - entity: "[[entity]]_firmware_version"
+                name: Firmare version
+              - entity: "[[entity]]_speed_alert"
+                name: Speed alert
+              - entity: "[[entity]]_tiltback_speed"
+                name: Tiltback speed
+              - entity: "[[entity]]_auto_off"
+                name: Auto-off
+
+  leaperkim_smartbms_card:
+    card:
+      type: vertical-stack
+      title: "[[title]]"
+      cards:
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]"
+              state: unavailable
+          card:
+            type: custom:decluttering-card
+            template: data_unavailable
+            variables:
+              - title: "[[title]]"
+        - type: conditional
+          conditions:
+            - entity: "[[entity]]"
+              state_not: unavailable
+          card:
+            type: vertical-stack
+            cards:
+              - type: entities
+                entities:
+                  - entity: "[[entity]]"
+                    name: Cell difference
+                  - entity: "[[entity]]_avg_cell"
+                    name: Average cell voltage
+                  - entity: "[[entity]]_current"
+                    name: BMS current
+              - type: custom:apexcharts-card
+                header:
+                  show: false
+                graph_span: 36min
+                span:
+                  start: minute
+                series:
+                  - entity: sun.sun
+                    name: Cells
+                    type: column
+                    color: "#8fb8e8"
+                    data_generator: |-
+                      const raw =
+                      hass.states["[[entity]]"]?.attributes?.cell_voltages;
+                      if (!Array.isArray(raw) || raw.length === 0) {
+                        return [[Date.now(), null]];
+                      }
+                      const cells = raw.map((v) => Number(v)).filter((v) =>
+                      Number.isFinite(v));
+                      if (cells.length === 0) {
+                        return [[Date.now(), null]];
+                      }
+                      const base = Date.now();
+                      const step = 60 * 1000;
+                      return cells.map((v, i) => [base + i * step, v]);
+                apex_config:
+                  chart:
+                    height: 300px
+                  xaxis:
+                    title:
+                      text: Battery cells
+                    axisBorder:
+                      show: false
+                    axisTicks:
+                      show: false
+                    labels:
+                      show: false
+                  yaxis:
+                    min: 3
+                    max: 4.3
+                    decimalsInFloat: 3
+                    title:
+                      text: Voltage
+                  tooltip:
+                    fixed:
+                      enabled: true
+                      position: bottomRight
+                    x:
+                      formatter: |
+                        EVAL:function(value, opts) {
+                          return "Cell " + (opts.dataPointIndex + 1);
+                        }
+                    "y":
+                      formatter: |
+                        EVAL:function(value) {
+                          return value == null ? "" : value.toFixed(3) + " V";
+                        }
+                  annotations:
+                    yaxis:
+                      - "y": 4.1
+                        borderColor: "#ff4d4f"
+                        strokeDashArray: 4
+
+views:
+  - title: Sherman L
+    type: sections
+    max_columns: 3
+    cards: []
+    sections:
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: leaperkim_card
+            variables:
+              - entity: sensor.sherman_l
+              - title: Sherman L
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: leaperkim_smartbms_card
+            variables:
+              - title: BMS 1
+              - entity: sensor.sherman_l_bms_1
+      - type: grid
+        cards:
+          - type: custom:decluttering-card
+            template: leaperkim_smartbms_card
+            variables:
+              - title: BMS 2
+              - entity: sensor.sherman_l_bms_2
