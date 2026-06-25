@@ -239,7 +239,7 @@ class VeteranParser:
             ),
             "pedals_mode": _u16_be(packet, 30),
             "pitch_angle": _round(_i16_be(packet, 32) / 100.0, 2),
-            "pwm": _u16_be(packet, 34),
+            "pwm": _round(_u16_be(packet, 34) / 100.0, 2),
             "battery_level": _veteran_battery_percent(_u16_be(packet, 4), model_code),
         }
 
