@@ -1,0 +1,8 @@
+{
+  "name": "EUC",
+  "content_in_root": false,
+  "domains": [
+    "euc"
+  ],
+  "render_readme": true
+}
