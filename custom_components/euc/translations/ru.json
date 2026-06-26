@@ -146,6 +146,9 @@
     "switch": {
       "periodic_updates": {
         "name": "Периодические обновления"
+      },
+      "keep_last_values": {
+        "name": "Сохранять последние значения"
       }
     },
     "number": {

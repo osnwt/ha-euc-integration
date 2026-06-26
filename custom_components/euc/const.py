@@ -8,10 +8,12 @@ NAME: Final = "EUC"
 
 CONF_BATTERY_PROFILE: Final = "battery_profile"
 CONF_PERIODIC_UPDATES: Final = "periodic_updates"
+CONF_KEEP_LAST_VALUES: Final = "keep_last_values"
 CONF_CONNECTED_SECONDS: Final = "connected_seconds"
 CONF_DISCONNECTED_SECONDS: Final = "disconnected_seconds"
 DEFAULT_BATTERY_PROFILE: Final = "auto"
 DEFAULT_PERIODIC_UPDATES: Final = False
+DEFAULT_KEEP_LAST_VALUES: Final = True
 DEFAULT_CONNECTED_SECONDS: Final = 15
 DEFAULT_DISCONNECTED_SECONDS: Final = 60
 MIN_CONNECTED_SECONDS: Final = 5

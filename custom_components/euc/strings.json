@@ -140,6 +140,9 @@
     "switch": {
       "periodic_updates": {
         "name": "Periodic updates"
+      },
+      "keep_last_values": {
+        "name": "Keep last values"
       }
     },
     "number": {

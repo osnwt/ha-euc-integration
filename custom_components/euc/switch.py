@@ -4,11 +4,12 @@ from dataclasses import dataclass
 
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import CONF_PERIODIC_UPDATES, DOMAIN
+from .const import CONF_KEEP_LAST_VALUES, CONF_PERIODIC_UPDATES, DOMAIN
 from .coordinator import EUCCoordinator
 
 
@@ -21,6 +22,12 @@ SWITCHES: tuple[EUCSwitchDescription, ...] = (
     EUCSwitchDescription(
         key="periodic_updates",
         translation_key="periodic_updates",
+        entity_category=EntityCategory.CONFIG,
+    ),
+    EUCSwitchDescription(
+        key="keep_last_values",
+        translation_key="keep_last_values",
+        entity_category=EntityCategory.CONFIG,
     ),
 )
 
@@ -49,10 +56,22 @@ class EUCSwitch(CoordinatorEntity[EUCCoordinator], SwitchEntity):
 
     @property
     def is_on(self) -> bool:
+        if self.entity_description.key == "keep_last_values":
+            return self.coordinator.keep_last_values
         return self.coordinator.periodic_updates
 
     async def async_turn_on(self, **kwargs) -> None:
-        await self.coordinator.async_update_runtime_options(**{CONF_PERIODIC_UPDATES: True})
+        option_key = (
+            CONF_KEEP_LAST_VALUES
+            if self.entity_description.key == "keep_last_values"
+            else CONF_PERIODIC_UPDATES
+        )
+        await self.coordinator.async_update_runtime_options(**{option_key: True})
 
     async def async_turn_off(self, **kwargs) -> None:
-        await self.coordinator.async_update_runtime_options(**{CONF_PERIODIC_UPDATES: False})
+        option_key = (
+            CONF_KEEP_LAST_VALUES
+            if self.entity_description.key == "keep_last_values"
+            else CONF_PERIODIC_UPDATES
+        )
+        await self.coordinator.async_update_runtime_options(**{option_key: False})

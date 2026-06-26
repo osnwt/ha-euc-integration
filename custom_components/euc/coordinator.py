@@ -16,6 +16,7 @@ from .const import (
     CONF_BATTERY_PROFILE,
     CONF_CONNECTED_SECONDS,
     CONF_DISCONNECTED_SECONDS,
+    CONF_KEEP_LAST_VALUES,
     CONF_PERIODIC_UPDATES,
     CONNECTION_STATE_CONNECTED,
     CONNECTION_STATE_COOLDOWN,
@@ -23,6 +24,7 @@ from .const import (
     DEFAULT_CONNECTED_SECONDS,
     DEFAULT_DISCONNECTED_SECONDS,
     DEFAULT_BATTERY_PROFILE,
+    DEFAULT_KEEP_LAST_VALUES,
     DEFAULT_PERIODIC_UPDATES,
     DOMAIN,
     EVENT_EUC_CONNECTED,
@@ -58,6 +60,7 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
         self._device_registry_synced = False
         self._protocol_entities_pruned = False
         self._periodic_updates = entry.options.get(CONF_PERIODIC_UPDATES, DEFAULT_PERIODIC_UPDATES)
+        self._keep_last_values = entry.options.get(CONF_KEEP_LAST_VALUES, DEFAULT_KEEP_LAST_VALUES)
         self._connected_seconds = entry.options.get(CONF_CONNECTED_SECONDS, DEFAULT_CONNECTED_SECONDS)
         self._disconnected_seconds = entry.options.get(
             CONF_DISCONNECTED_SECONDS, DEFAULT_DISCONNECTED_SECONDS
@@ -115,6 +118,10 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
     def disconnected_seconds(self) -> int:
         return self._disconnected_seconds
 
+    @property
+    def keep_last_values(self) -> bool:
+        return self._keep_last_values
+
     def telemetry_available(self, protocols: tuple[str, ...] | None = None) -> bool:
         if self.data is None:
             return False
@@ -122,6 +129,8 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
             return False
         if self.connection_state == CONNECTION_STATE_COOLDOWN:
             return True
+        if self.connection_state == CONNECTION_STATE_DISCONNECTED:
+            return self._keep_last_values
         return self.is_available
 
     def _set_connection_state(self, state: str) -> None:
@@ -201,7 +210,6 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
                 self._planned_disconnect = False
                 self._cancel_timers()
                 self._set_connection_state(CONNECTION_STATE_DISCONNECTED)
-                self.async_set_updated_data(None)
 
             if was_connected and self._connect_event_sent:
                 self._connect_event_sent = False
@@ -215,6 +223,7 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
         self.config_entry = entry
         self.client.set_battery_profile(entry.options.get(CONF_BATTERY_PROFILE, DEFAULT_BATTERY_PROFILE))
         self._periodic_updates = entry.options.get(CONF_PERIODIC_UPDATES, DEFAULT_PERIODIC_UPDATES)
+        self._keep_last_values = entry.options.get(CONF_KEEP_LAST_VALUES, DEFAULT_KEEP_LAST_VALUES)
         self._connected_seconds = entry.options.get(CONF_CONNECTED_SECONDS, DEFAULT_CONNECTED_SECONDS)
         self._disconnected_seconds = entry.options.get(
             CONF_DISCONNECTED_SECONDS, DEFAULT_DISCONNECTED_SECONDS
