@@ -234,8 +234,8 @@ class EUCCoordinator(DataUpdateCoordinator[TelemetrySample | None]):
             self._cancel_timers()
             if self.connection_state == CONNECTION_STATE_COOLDOWN:
                 self._set_connection_state(CONNECTION_STATE_DISCONNECTED)
-                self.async_update_listeners()
             await self.client.set_connection_enabled(True)
+            self.async_update_listeners()
             return
 
         if self.connection_state == CONNECTION_STATE_CONNECTED and self.connected:
