@@ -139,7 +139,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         device_class=SensorDeviceClass.SPEED,
         native_unit_of_measurement=UnitOfSpeed.KILOMETERS_PER_HOUR,
         entity_category=EntityCategory.DIAGNOSTIC,
-        suggested_display_precision=2,
+        suggested_display_precision=0,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
@@ -149,7 +149,7 @@ SENSORS: tuple[EUCSensorDescription, ...] = (
         device_class=SensorDeviceClass.SPEED,
         native_unit_of_measurement=UnitOfSpeed.KILOMETERS_PER_HOUR,
         entity_category=EntityCategory.DIAGNOSTIC,
-        suggested_display_precision=2,
+        suggested_display_precision=0,
         protocols=VETERAN_ONLY,
     ),
     EUCSensorDescription(
